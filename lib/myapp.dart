@@ -23,7 +23,8 @@ class MyGetHttpData extends StatefulWidget {
 class MyGetHttpDataState extends State<MyGetHttpData> {
    
   List data;
-   final String url = "https://api.themoviedb.org/3/search/movie?api_key=3fc19a9f5b408d99ba4d3efb472f4ca0&language=en-US&query="+ SearchScreen.show + "&page=1&include_adult=false";
+  final String url = "https://api.jikan.moe/v3/search/anime?q="+ SearchScreen.show + "&page=1";
+  // final String url = "https://api.themoviedb.org/3/search/movie?api_key=3fc19a9f5b408d99ba4d3efb472f4ca0&language=en-US&query="+ SearchScreen.show + "&page=1&include_adult=false";
   // Function to get the JSON data
   Future<String> getJSONData(  ) async {
     var response = await http.get(
@@ -48,7 +49,10 @@ class MyGetHttpDataState extends State<MyGetHttpData> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return new MaterialApp(
+    
+    
+    home: Scaffold(
       appBar: new AppBar(
         title: new Text("The Movies DB"),
       ),
@@ -65,7 +69,7 @@ class MyGetHttpDataState extends State<MyGetHttpData> {
           return GestureDetector(
             child: Cell(data[index]),
             onTap: () => {
-              SearchScreen.movieNumber = data[index]['id'],
+              SearchScreen.movieNumber = data[index]['mal_id'],
               Navigator.push(
     context,
     new MaterialPageRoute(builder: (context) => new MovieDetailsPageFormal()),
@@ -75,7 +79,7 @@ class MyGetHttpDataState extends State<MyGetHttpData> {
           );}
           
     ))
-    );
+    ));
       
         
   }

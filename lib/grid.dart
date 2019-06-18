@@ -4,8 +4,8 @@ class Cell extends StatelessWidget {
   @required
   final dynamic cellModel;
   void changeBG(){
-    if(cellModel['poster_path']==null)
-    cellModel['poster_path'] = "/lyv5TfzTcqdS212LUMzUPk8lJeB.jpg";
+    if(cellModel['image_url']==null)
+    cellModel['image_url'] = "https://netflixroulette.files.wordpress.com/2013/01/image-not-found.gif";
   }
   @override
   Widget build(BuildContext context) {
@@ -22,9 +22,10 @@ class Cell extends StatelessWidget {
                  FadeInImage.assetNetwork(
 
           placeholder: 'assets/download.png',
-          image: "https://image.tmdb.org/t/p/w500" + cellModel['poster_path'],
-          width: 150.0,
-          height: 150.0,
+          image: cellModel['image_url'],
+          //"https://image.tmdb.org/t/p/w500" + cellModel['poster_path'],
+          width: MediaQuery.of(context).size.width*0.28,
+          height: MediaQuery.of(context).size.height*0.18,
           alignment: Alignment.center,
           fit: BoxFit.fill,
           

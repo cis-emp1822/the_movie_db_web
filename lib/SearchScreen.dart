@@ -4,12 +4,12 @@ class SearchScreen extends StatelessWidget {
   final TextEditingController controller1 = new TextEditingController();
   static String show = "";
  static int movieNumber ;
- 
+  
   @override
   Widget build (BuildContext ctxt) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Search Movies"),
+        title: new Text("Search Anime"),
       ),
       body: new Container(
       padding: const EdgeInsets.all(18.0),
@@ -20,7 +20,7 @@ class SearchScreen extends StatelessWidget {
           children: <Widget>[
           
             new TextField(
-              decoration: new InputDecoration( hintText: "search movies here... " , hintStyle: new TextStyle(
+              decoration: new InputDecoration( hintText: "search anime here... " , hintStyle: new TextStyle(
       fontSize: 25.0,
       color: Colors.black,
     ),),

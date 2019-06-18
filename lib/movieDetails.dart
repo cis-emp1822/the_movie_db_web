@@ -19,7 +19,9 @@ class _MovieDetailsPageFormalState extends State<MovieDetailsPageFormal> {
 
   GlobalKey<ScaffoldState> key = new GlobalKey();
    Map<String, dynamic> movieData;
- final String url = "https://api.themoviedb.org/3/movie/" + SearchScreen.movieNumber.toString() + "?api_key=3fc19a9f5b408d99ba4d3efb472f4ca0&language=en-US";
+ final String url = "https://api.jikan.moe/v3/anime/"+ SearchScreen.movieNumber.toString();
+
+ // url = "https://api.themoviedb.org/3/movie/" + SearchScreen.movieNumber.toString() + "?api_key=3fc19a9f5b408d99ba4d3efb472f4ca0&language=en-US";
   Future<Map<String, dynamic>> getJSONData(  ) async { 
     var response = await http.get(
         // Encode the url
@@ -41,22 +43,11 @@ class _MovieDetailsPageFormalState extends State<MovieDetailsPageFormal> {
    return movieData;
 
   }
-    urlBackdrop(){
-    String url ="https://image.tmdb.org/t/p/w500" + "/lyv5TfzTcqdS212LUMzUPk8lJeB.jpg";
-    //movieData.putIfAbsent("backdrop_path", () => "/lyv5TfzTcqdS212LUMzUPk8lJeB.jpg" );
-    try {
-      if(movieData['backdrop_path']==null)
-      {
-     return url;
-      }
-      else
-  return url = "https://image.tmdb.org/t/p/w500" +  movieData['backdrop_path'].toString();
-  } catch ( e )
-  {
-    print(e.toString());
-    return url;
-  }
-  }
+   genres(){
+     String str = "";
+    movieData['genres'].forEach( (k)=> str+=k['name']+" , ");
+    return str ;
+    }
   
   @override
   Widget build(BuildContext context) {
@@ -91,7 +82,7 @@ class _MovieDetailsPageFormalState extends State<MovieDetailsPageFormal> {
                     FadeInImage.assetNetwork(
 
             placeholder: 'assets/download.png',
-            image:urlBackdrop() ,
+            image:movieData['image_url'] ,
             alignment: Alignment.center,
             fit: BoxFit.fill,
             
@@ -110,7 +101,7 @@ class _MovieDetailsPageFormalState extends State<MovieDetailsPageFormal> {
                         child: new IconButtonText(
                           onClick: (){},
                           iconData: Icons.store,
-                          text: movieData['release_date'],
+                          text: movieData['aired']['from'].toString().substring(0,10),
                           
                         ),
                     ),
@@ -121,7 +112,7 @@ class _MovieDetailsPageFormalState extends State<MovieDetailsPageFormal> {
                           
                         },
                         iconData: Icons.local_movies,
-                        text: movieData['genres'].isEmpty?"not available":movieData['genres'][0]['name'],
+                        text: genres(),
                         
                       ),
                     ),
@@ -134,7 +125,7 @@ class _MovieDetailsPageFormalState extends State<MovieDetailsPageFormal> {
                           
                         },
                         iconData:  Icons.stars,
-                       text: movieData['popularity'].toString(),
+                       text: movieData['score'].toString(),
                         
                       ),
                     ),
@@ -143,7 +134,7 @@ class _MovieDetailsPageFormalState extends State<MovieDetailsPageFormal> {
                 new Divider(height: 32.0, color: Colors.black38,),
                 new Text("Description", style: const TextStyle(fontSize: 20.0, fontFamily: "CrimsonText"),),
                 new SizedBox(height: 8.0,),
-                new Text(movieData['overview'], style: const TextStyle(fontSize: 16.0),),
+                new Text(movieData['synopsis'], style: const TextStyle(fontSize: 16.0),),
               ],
             ),
           ),
